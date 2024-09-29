@@ -1,10 +1,22 @@
 import convertapi
 import sys
+from openpyxl.workbook import Workbook
+from openpyxl import load_workbook
 
 convertapi.api_credentials = 'secret_dNB0v09AfZ2yOwUe'
-file_name = "./Btech_Attendance_2024.pdf"
+file_name = "./Btech_Attendance_2024"
 
 convertapi.convert('xlsx', {
-    'File': file_name
+    'File': file_name + ".pdf"
 }, from_format = 'pdf').save_files('./')
 
+#Saved Excel file is file_name.xlsx
+wb = load_workbook(file_name+".xlsx")
+
+ws = wb.active
+
+attendance_col = ws['F']
+total_col = ws['E']
+
+for i in attendance.size:
+    print(i.value*100/j.value)
