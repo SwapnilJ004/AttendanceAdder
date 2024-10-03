@@ -41,7 +41,7 @@ def upload_file():
             return jsonify({'error': 'Invalid filename'}), 400
 
         # filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        filepath = os.path.join('./', filename)
+        filepath = os.path.join('./uploads', filename)
 
         print(f"Saving file at: {filepath}")  # Debugging: Filepath
         
@@ -61,8 +61,8 @@ def upload_file():
         try:
             print(f"Starting conversion of {filepath}")  # Debugging: Start conversion
             convertapi.convert('xlsx', {
-                'File': 'Btech_Attendance_2024.pdf'
-            }, from_format='pdf').save_files('./')
+                'File': './uploads/Btech_Attendance_2024.pdf'
+            }, from_format= 'pdf').save_files("./uploads")
 
         except Exception as e:
             print(f"ConvertAPI error: {str(e)}")  # Error handling
