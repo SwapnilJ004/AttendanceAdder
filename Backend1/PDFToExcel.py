@@ -10,7 +10,6 @@ convertapi.convert('xlsx', {
     'File': file_name + ".pdf"
 }, from_format = 'pdf').save_files('./')
 
-#Saved Excel file is file_name.xlsx
 wb = load_workbook(file_name+".xlsx")
 
 ws = wb.active
@@ -18,5 +17,5 @@ ws = wb.active
 attendance_col = ws['F']
 total_col = ws['E']
 
-for i in attendance.size:
+for i in attendance_col.length:
     print(i.value*100/j.value)

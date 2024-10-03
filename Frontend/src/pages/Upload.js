@@ -11,10 +11,14 @@ function Upload() {
 
   const handleUpload = async () => {
     const formData = new FormData();
-    formData.append('file', selectedFile);
-
+    formData.append('file', selectedFile); 
+  
     try {
-      const response = await axios.post('/api/upload', formData);
+      const response = await axios.post('http://127.0.0.1:5000/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Important for file upload
+        }
+      });
       alert('File uploaded successfully!');
     } catch (error) {
       alert('Error uploading file');
