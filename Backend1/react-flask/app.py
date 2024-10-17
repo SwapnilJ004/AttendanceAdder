@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
 import os
 import convertapi
 
@@ -62,7 +62,7 @@ def upload_file():
             print(f"Starting conversion of {filepath}")  # Debugging: Start conversion
             convertapi.convert('xlsx', {
                 'File': './uploads/Btech_Attendance_2024.pdf'
-            }, from_format= 'pdf').save_files("./uploads")
+            }, from_format= 'pdf').save_files("./")
 
         except Exception as e:
             print(f"ConvertAPI error: {str(e)}")  # Error handling
