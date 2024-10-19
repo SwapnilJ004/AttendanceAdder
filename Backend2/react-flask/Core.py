@@ -1,7 +1,7 @@
 import cv2
 import layoutparser as lp
 from paddleocr import PaddleOCR, draw_ocr
-image = cv2.imread("./uploads/Attendance3.jpg")
+image = cv2.imread("./uploads/Attendance1.jpg")
 image = image[..., ::-1]
 
 # load model
@@ -21,16 +21,16 @@ for l in layout:
         y_2 = int(l.block.y_2)
     break
 
-im = cv2.imread("./uploads/Attendance3.jpg")
+im = cv2.imread("./uploads/Attendance1.jpg")
 
 cv2.imwrite('ext_im.jpg', im[y_1:y_2,x_1:x_2])
 
-ocr = PaddleOCR(lang='en')
+ocr = PaddleOCR(lang='en', use_angle_cls=True)
 image_path = 'ext_im.jpg'
 image_cv = cv2.imread(image_path)
 image_height = image_cv.shape[0]
 image_width = image_cv.shape[1]
-output = ocr.ocr(image_path)
+output = ocr.ocr(image_path)[0]
 
 print(output)
 
@@ -40,14 +40,12 @@ probabilities = [line[1][1] for line in output]
 
 image_boxes = image_cv.copy()
 
-for box in boxes:
-    top_left_x = int(box[0][0][0])
-    top_left_y = int(box[0][0][1])
-    bottom_right_x = int(box[0][2][0])
-    bottom_right_y = int(box[0][2][1])
-    
-    # Draw the rectangle
-    cv2.rectangle(image_boxes, (top_left_x, top_left_y), (bottom_right_x, bottom_right_y), (0, 0, 255), 1)
-
+for box,text in zip(boxes,texts):
+  cv2.rectangle(image_boxes, (int(box[0][0]),int(box[0][1])), (int(box[2][0]),int(box[2][1])),(0,0,255),1)
+  cv2.putText(image_boxes, text, (int(box[0][0]),int(box[0][1])), cv2.FONT_HERSHEY_SIMPLEX,1,(222,0,0),1)
 
 cv2.imwrite('detections.jpg', image_boxes)
+
+horiz_boxes = []
+vert_boxes = []
+
