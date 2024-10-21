@@ -4,8 +4,33 @@ from paddleocr import PaddleOCR, draw_ocr
 import tensorflow as tf
 import numpy as np
 import pandas as pd
-image = cv2.imread("./uploads/Attendance1.jpg")
-image = image[..., ::-1]
+import os
+import re
+
+def getImageFile():
+    max_index = -1
+    max_file = None
+    directory = "./uploads/"
+    pattern = re.compile(r"Attendance(\d+)\.(png|jpg)")
+
+    for name in os.listdir(directory):
+        match = pattern.match(name)
+        if match:
+            index = int(match.group(1))
+            if index > max_index:
+                max_index = index
+                max_file = name
+          
+    if max_file:
+        return os.path.join(directory, max_file)
+    return None
+
+
+print(getImageFile())
+
+image = cv2.imread(getImageFile())
+# image = image[..., ::-1]
+
 
 # load model
 model = lp.PaddleDetectionLayoutModel(config_path="lp://PubLayNet/ppyolov2_r50vd_dcn_365e_publaynet/config",
@@ -24,7 +49,7 @@ for l in layout:
         y_2 = int(l.block.y_2)
     break
 
-im = cv2.imread("./uploads/Attendance1.jpg")
+im = cv2.imread(getImageFile())
 
 cv2.imwrite('ext_im.jpg', im[y_1:y_2,x_1:x_2])
 
@@ -116,7 +141,7 @@ for i in vert_lines:
   unordered_boxes.append(vert_boxes[i][0])
 
 ordered_boxes = np.argsort(unordered_boxes)
-print(ordered_boxes)
+# print(ordered_boxes)
 
 def intersection(box_1, box_2):
   return [box_2[0], box_1[1], box_2[2], box_1[3]]
@@ -134,7 +159,7 @@ def iou(box_1, box_2):
   box_1_area = abs((box_1[2] - box_1[0]) * (box_1[3] - box_1[1]))
   box_2_area = abs((box_2[2] - box_2[0]) * (box_2[3] - box_2[1]))
 
-  print("Union is:", float(box_1_area + box_2_area - inter))
+  # print("Union is:", float(box_1_area + box_2_area - inter))
 
   return inter / float(box_1_area + box_2_area - inter)
 
@@ -151,4 +176,7 @@ for i in range(len(horiz_lines)):
 
 # print("Output is:", out_array)
 
-pd.DataFrame(out_array).to_csv("Attendance1.csv")
+if not os.path.exists("./outputs"):
+    os.makedirs("outputs")
+
+pd.DataFrame(out_array).to_csv("./outputs/Attendance.csv")
