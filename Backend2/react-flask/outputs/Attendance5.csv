@@ -1,0 +1,16 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,Net Attendance
+Sno,Enrollment,Name,Total Classes,,Total Present,,,Total Lab,,Total Present,,Percentage,,Total Classes,,Total Present,,,Total Classes,Total Present,,Total Lectures,,,Total Percentage,,
+,,,,,,,CO44251,CO44251,CO44251,,,,,,,CO44401,CO44401,,,CO,,,,,,,
+,,,,,,,,,,,,,,,,,,,Product Development &,Product Development &,Product Development &,,,,,,
+,,,,,,,Deep Learning,Deep Learning,Deep Learning,,,,,,System Operations Lab,System Operations Lab,System Operations Lab,System Operations Lab,,QA,,,,,,,
+,,,,,,,,,,,,,,,,,,,,Workshop,,,,,,,
+1,0801CS211068,Prashant Tripathi,,5,,4,80,,2,,2,,60,,3,,3,100,3,2,67,,13,11,,85,
+2,0801CS211073,Ramkrishna Patidar,,5,,4,80,,2,,2,,100,,3,,3,100,3,2,67,,13,11,,85,86.4
+3,0801CS211082,Shrajan Gupta,,55,,4,80,,2,,22,,100,,3,,3,100,3,22,67,,13,11,,85,66.375
+4,0801CS211094,Tanmay Sharma,,55,,4,80,,2,,22,,100,,3,,2,67,3,22,67,,13,10,,77,61.25
+5,0801CS211099,Vinay Patidar,,5,,4,80,,2,,2,,100,,3,,3,100,3,2,67,,13,11,,85,86.4
+6,0801CS211010,Ajay Kumar Sahani,,5,,3,60,,2,,0,,0,,3,,3,100,3,2,67,,13,8,,62,72.25
+7,0801CS211042,Harsh Agrawal,,5,,0,0,,2,,0,,0,,3,,0,0,3,0,0,,13,0,,0,0.0
+8,0801CS211067,Pranjal Shrivastava,,5,,4,80,,2,,1,,50,,3,,3,100,3,2,67,,13,10,,77,74.8
+9,0801CS211095,Toshika Verma,,55,,5,100,,2,,2,,100,,3,,3,100,3,1,33,,13,11,85,85,79.71428571428571
+10,0801CS223D06,Rahul Saini,,55,,4,80,,2,,2,,100,,3,,3,100,3,3,100,,13,12,,92,87.83333333333333

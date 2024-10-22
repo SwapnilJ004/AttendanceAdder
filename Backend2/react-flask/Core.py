@@ -7,6 +7,31 @@ import pandas as pd
 import os
 import re
 
+def get_next_filename(output_folder, prefix='Attendance', extension='csv'):
+    """
+    Get the next available filename in the form of 'Attendance[i].csv'.
+    The index 'i' is the next available number based on the files already in the output folder.
+    """
+    # Ensure the output folder exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # List all files in the output folder that match the pattern 'Attendance*.csv'
+    existing_files = [f for f in os.listdir(output_folder) if f.startswith(prefix) and f.endswith(f'.{extension}')]
+
+    if existing_files:
+        # Extract the numeric part of the filenames
+        numbers = [int(f.replace(prefix, '').split('.')[0]) for f in existing_files if f.replace(prefix, '').split('.')[0].isdigit()]
+        next_number = max(numbers) + 1 if numbers else 1
+    else:
+        next_number = 1  # Start from 1 if no files exist
+
+    # Return the next available filename
+    return f'{prefix}{next_number}.{extension}'
+
+# Directory to save the output files
+OUTPUT_FOLDER = './outputs'
+
 def getImageFile():
     max_index = -1
     max_file = None
@@ -179,4 +204,50 @@ for i in range(len(horiz_lines)):
 if not os.path.exists("./outputs"):
     os.makedirs("outputs")
 
-pd.DataFrame(out_array).to_csv("./outputs/Attendance.csv")
+print("Core file running")
+
+ # Generate the next filename for saving the output
+output_filename = get_next_filename(OUTPUT_FOLDER)
+
+# Convert the array to a DataFrame and save it as a CSV
+output_file_path = os.path.join(OUTPUT_FOLDER, output_filename)
+df = pd.DataFrame(out_array)
+
+print("DataFrame columns:", df.columns.tolist())
+
+# Calculate the Net Attendance, starting from row 7
+net_attendance = []
+
+# Iterate through rows starting from index 6 (7th row)
+for index, row in df.iterrows():
+    if index < 6:  # Skip rows before the 7th one
+        net_attendance.append(None)  # Keep it None or 0 for these rows
+        continue
+
+    total_percents = []
+
+    for value in row:
+        try:
+            # Convert to float
+            numeric_value = float(value)
+            # Count values greater than 20 as attendance percentages
+            if numeric_value > 20:  
+                total_percents.append(numeric_value)
+        except ValueError:
+            # Ignore non-numeric values
+            continue
+
+    # Calculate the average percentage for Net Attendance
+    if total_percents:  # Ensure there are valid percentages
+        net_attendance.append(sum(total_percents) / len(total_percents))
+    else:
+        net_attendance.append(0)  # Default to 0 if no attendance data
+
+# Add the Net Attendance as a new column to the DataFrame
+df['Net Attendance'] = net_attendance
+
+# Save it as a CSV
+output_file_path = os.path.join(OUTPUT_FOLDER, output_filename)
+df.to_csv(output_file_path, index=False)
+
+print(f"Output saved to {output_file_path}")  # Optional confirmation message
