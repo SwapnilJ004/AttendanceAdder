@@ -11,7 +11,6 @@ function Navbar() {
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/upload">Upload</Button>
-        <Button color="inherit" component={Link} to="/attendance">Attendance</Button>
       </Toolbar>
     </AppBar>
   );
